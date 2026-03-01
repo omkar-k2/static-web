@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DevOps Galaxy</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: white;
+  text-align: center;
+  overflow: hidden;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.container {
+  margin-top: 12%;
+}
+
+h1 {
+  font-size: 3rem;
+  text-shadow: 0 0 20px cyan;
+}
+
+.typing {
+  font-size: 1.5rem;
+  color: #00ffff;
+  height: 40px;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 50px;
+}
+
+.card {
+  background: rgba(255,255,255,0.1);
+  padding: 25px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  width: 180px;
+  transition: 0.4s;
+}
+
+.card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px cyan;
+}
+
+.number {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+button {
+  margin-top: 40px;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 30px;
+  background: cyan;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: white;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="container">
+  <h1>🚀 DevOps Galaxy</h1>
+  <div class="typing" id="typing"></div>
+
+  <div class="cards">
+    <div class="card">
+      <div class="number" id="deploy">0</div>
+      <div>Deployments</div>
+    </div>
+    <div class="card">
+      <div class="number" id="users">0</div>
+      <div>Users</div>
+    </div>
+    <div class="card">
+      <div class="number" id="uptime">0</div>
+      <div>Uptime %</div>
+    </div>
+  </div>
+
+  <button onclick="alert('You are officially entering the DevOps universe 🚀')">
+    Enter Galaxy
+  </button>
+</div>
+
+<script>
+// Typing Effect
+const text = "Build • Automate • Deploy • Scale";
+let i = 0;
+function typeEffect() {
+  if (i < text.length) {
+    document.getElementById("typing").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeEffect, 80);
+  }
+}
+typeEffect();
+
+// Counter Animation
+function counter(id, max) {
+  let count = 0;
+  const interval = setInterval(() => {
+    count += Math.ceil(max / 100);
+    if (count >= max) {
+      count = max;
+      clearInterval(interval);
+    }
+    document.getElementById(id).innerText = count;
+  }, 30);
+}
+
+counter("deploy", 1500);
+counter("users", 4800);
+counter("uptime", 99);
+
+// Star Background Animation
+const canvas = document.getElementById("stars");
+const ctx = canvas.getContext("2d");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let stars = [];
+for (let i = 0; i < 200; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    radius: Math.random() * 1.5,
+    speed: Math.random() * 0.5
+  });
+}
+
+function animateStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "white";
+
+  stars.forEach(star => {
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+    ctx.fill();
+    star.y += star.speed;
+    if (star.y > canvas.height) {
+      star.y = 0;
+    }
+  });
+
+  requestAnimationFrame(animateStars);
+}
+animateStars();
+</script>
+
+</body>
+</html>
